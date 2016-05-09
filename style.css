@@ -1,0 +1,18 @@
+html, base {
+    background-color: #f7f7f7;
+    font-family: sans-serif;
+}
+
+input {
+    font-family: sans-serif;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.button {
+    width: 100%;
+}
