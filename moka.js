@@ -49,6 +49,9 @@ Moka.Component.prototype = {
         this.className = options.className;
 
         this.element = this._getBase(options.inherits);
+
+        $.extend(this, this.element);
+
         this._setChildren(options.children);
         this.element.addClass(options.className);
 
@@ -180,14 +183,23 @@ Moka.Cache = {
  */
 Moka.Factory = {
     input: function (name) {
+        var onInput = function (e) {
+            this.value = e.target.value;
+        };
+
         Moka.Cache.define(name, {
             type: 'text',
-            value: undefined,
+            value: '',
 
-            onInput: function (e) {
-                this.value = e.target.value;
-            }
+            onInput: onInput
         }, function () {
+            // this is a fix to not override the binding if the parent is implementing
+            // but at the same time provide a default binding to this in case there's
+            // no parent implementation.
+            if (this.onInput == onInput) {
+                this.onInput = this.onInput.bind(this);
+            }
+
             return {
                 inherits: 'input',
                 type: this.type,
