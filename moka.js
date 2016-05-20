@@ -45,12 +45,12 @@ Moka.Component.prototype = {
             return;
         }
 
+        $.extend(this, this.element);
+
         this.children = options.children;
         this.className = options.className;
 
         this.element = this._getBase(options.inherits);
-
-        $.extend(this, this.element);
 
         this._setChildren(options.children);
         this.element.addClass(options.className);
@@ -206,6 +206,32 @@ Moka.Factory = {
                 placeholder: this.placeholder,
                 onInput: this.onInput,
                 value: this.value
+            }
+        });
+    },
+
+    checkbox: function (name) {
+        var onChange = function (e) {
+            this.checked = e.target.checked;
+        };
+
+        Moka.Cache.define(name, {
+            checked: false,
+
+            onChange: onChange
+        }, function () {
+            // this is a fix to not override the binding if the parent is implementing
+            // but at the same time provide a default binding to this in case there's
+            // no parent implementation.
+            if (this.onChange == onChange) {
+                this.onChange = this.onChange.bind(this);
+            }
+
+            return {
+                inherits: 'input',
+                type: 'checkbox',
+                onChange: this.onChange,
+                checked: this.checked
             }
         });
     },

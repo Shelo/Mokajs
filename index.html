@@ -7,16 +7,17 @@
 
     <script src="moka.js"></script>
     <script src="jquery.js"></script>
+    <!-- <script src="simple-form.js"></script> -->
+    <script src="todo.js"></script>
 </head>
 
 <body>
 
 <div id="container"></div>
 
-<script src="simple-form.js"></script>
-
 <script>
-    var component = Moka.Instantiate('Form', $('#container'));
+    // Moka.Instantiate('Form', $('#container'));
+    var component = Moka.Instantiate('ToDo', $('#container'));
 </script>
 
 </body>
